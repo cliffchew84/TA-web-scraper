@@ -6,8 +6,8 @@ user_agent = 'Mozilla/5.0 (compatible; MSIE 5.5; Windows NT)'
 headers = {'User-Agent': user_agent}
 
 # Creating of text file to save all the locations
-txt_f = (r"C:\Users\User\Downloads\EM Project\Python Scripts\text files\attraction_links.txt")
-# txt_f = (r"C:\Users\cliffchew84\Dropbox\SAS BIA\EM Project\Python Scripts\attraction_corpus.txt")
+current_folder = os.path.dirname(os.path.realpath(__file__))
+txt_f = (current_folder + r"/attraction_links.txt")
 
 f=csv.writer(open(txt_f,'w+'))
 base_link = "http://www.tripadvisor.com.sg/"
@@ -19,7 +19,7 @@ while counter<360: # 360 for entire attractions list
 
     f_url = urllib2.urlopen(link1)
     soup = BeautifulSoup(f_url)
-    
+
     attractions = []
     linkages = []
     # Names of attractions
@@ -33,7 +33,7 @@ while counter<360: # 360 for entire attractions list
     for i in linkages:
         f=csv.writer(open(txt_f,'a+'))
         f.writerow(i)
-    
+
     counter+=30
     link1 = base_link + "Attractions-g294265-Activities-oa" + str(counter) + "-Singapore.html#TtD"
     print ("Moving to next 30: " + link1)

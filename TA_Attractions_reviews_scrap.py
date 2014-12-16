@@ -74,59 +74,6 @@ for review_score in soup.find_all("div", attrs={"class":"rating reviewItemInline
     rs = str(review_score.img)[10:11]
     review_scores.append(rs)
 
-'''
-# Print everything for checks
-for rt in review_titles:
-        print rt
-print ""
-
-for rd in review_dates:
-    print rd
-print ""
-
-for n in names:
-    print n
-print ""
-
-for l in locations:
-    print l
-print ""
-'''
 
 list_total = list(zip(names,locations,review_titles, \
                       review_dates,review_scores,actual_reviews))
-
-'''
-link1 = base_link + "Attraction_Review-g294265-d2007558-Reviews-Loof-Singapore.html"
-while counter<10: # __ for entire attractions list
-    print ("Scraping " + link1)
-
-    f_url = urllib2.urlopen(link1)
-    soup = BeautifulSoup(f_url)
-    
-    attractions = []
-    linkages = []
-    # Names of attractions
-    for links in soup.find_all("a", attrs={"class":"property_title"}):
-        name = links.get_text("\n",strip=True)
-        link = links.get('href')
-        print name
-        print link
-        attractions.append(name)
-        linkages.append(link)
-        print " "
-
-    list_total = list(zip(attractions,linkages))
-
-    # Copying the data into the text file
-    for i in list_total:
-        f=csv.writer(open(txt_f,'a+'))
-        f.writerow(i)
-    
-    counter+=30
-    link1 = base_link + "Attraction_Review-g294265-d2007558-Reviews-or" + str(counter) + "Loof-Singapore.html#REVIEWS"
-    print ("Moving to next 10: " + link1)
-    print (" ")
-
-print("Congrats, your web scraper has successfully scrapped all the sites you wanted.")
-'''

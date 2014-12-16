@@ -7,7 +7,8 @@ headers = {'User-Agent': user_agent}
 
 base_link = "http://www.tripadvisor.com.sg/"
 # Update if there are errorsbefore the loop ends
-with open (r'C:\Users\User\Downloads\EM Project\Python Scripts\text files\attraction_links.txt', "r") as myfile:
+current_folder = os.path.dirname(os.path.realpath(__file__))
+with open (current_folder + r"/attraction_links.txt", "r") as myfile:
     data=myfile.readlines()
 
 ''' This loop goes through the entire list from shopping_links.txt'''
@@ -16,7 +17,7 @@ for i_links in data[:]:
     print "Going through " + str(i_links)
     item = i_links
     link1 = base_link + item
-    # print link1 
+    # print link1
 
     # Setting up the place for amenity saving
     listing = item.split("-")
@@ -24,8 +25,6 @@ for i_links in data[:]:
     indexing_number = listing[2]
     # print place
 
-    # test link: link1= "http://www.tripadvisor.com.sg/Attraction_Review-g294265-d2007558-Reviews-Loof-Singapore.html"
-    # link1= "http://www.tripadvisor.com.sg//Attraction_Review-g294265-d1635998-Reviews-10_Scotts-Singapore.html"
     f_url = urllib2.urlopen(link1)
     soup = BeautifulSoup(f_url)
 
@@ -37,7 +36,7 @@ for i_links in data[:]:
     actual_reviews = []
     review_scores = []
     # review_numbers = []
-    
+
     # This is the counter the allows the program to loop through all TA attraction reviews.
     counter = 0 # Increments are done in 10s, ie, the number of reviews per page
 
@@ -106,25 +105,24 @@ for i_links in data[:]:
         amenity = []
         for i in range(len(names)):
             amenity.append(place)
-            
+
         # Gone through the entire loop
         list_total = list(zip(amenity,names,locations,review_titles, \
                               review_dates,review_scores,actual_reviews))
-         
+
         # Save file into text
-        # txt_f = (r"C:\Users\cliffchew84\Dropbox\SAS BIA\EM Project\Python Scripts\text files\shopping_" + place + ".txt")
         print "Copying all the info into each text file"
         for i in list_total:
             txt_f = (r"C:\Users\User\Downloads\EM Project\Python Scripts\text files\attractions\_" + place + "_" + i[1] + ".txt")
             f=csv.writer(open(txt_f,'w+'))
             f.writerow(i)
-        
+
         print "FINISHED 10 TEXT FILES!!"
         # Note: Non_English text seems to be automatically removed? That needs to be confirmed '''
 
         counter+=10
         link1 = base_link + "Attraction_Review-g294265-" + str(indexing_number) + "-Reviews-or" + str(counter) + "-" + str(place) + "-Singapore.html#REVIEWS"
-        
+
         print "Please wait for 1 secs before we proceed"
         time.sleep(1)
         print ("Moving to next 10: " + link1)
